@@ -1,0 +1,8 @@
+#!/bin/bash
+mkdir fastqc_analysis
+for FILE in *.fastq.gz
+do fastqc -o fastqc_analysis $FILE
+done
+
+multiqc fastqc_analysis
+

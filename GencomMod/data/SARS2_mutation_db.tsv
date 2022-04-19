@@ -1,0 +1,9 @@
+#genetic region	wildtype	position	mutation	category	surveillance	comment
+Sgene	D	614	G	major	Yes	D614G variant shows enhanced infectivity doi_10.1126/science.abe8499 
+Sgene	N	501	Y	major	Yes	N501Y is one of six key contact residues within the receptor-binding domain (RBD)
+Sgene	P	681	H	major	Yes	P681H is immediately adjacent to the furin cleavage site, a known location of biological significance
+Sgene	Y	453	F	major	Yes	Receptor binding domain (RBD) associatted with farmed minks.doi_10.1126/science.abe5901
+Sgene	N	439	K	major	Yes	maintains fitness while evading antibody-mediated immunity
+Sgene	H	69	d	major	Yes	Associated with Sdrop
+Sgene	V	70	d	major	Yes	Associated with Sdrop
+Sgene	D	796	H	major	Yes	conferred decreased sensitivity to convalescent 
