@@ -31,6 +31,8 @@
       # Consultar https://github.com/dezordi/ViralFlow para requerimientos
    # HAVoC y todos los requerimientos
       # Consultar https://bitbucket.org/auto_cov_pipeline/havoc/src/master/ para requerimientos
+   # Gencom y todas sus dependencias
+      # Consultar 
    # Docker
    # Samtools
    # pdfunite
@@ -52,6 +54,7 @@ echo "|  \_____\____/   \/        |______|_| \_|_____/  |"
 echo "|                                                 |"
 echo "==================================================="                                                  
 echo ""
+echo $2
 
 #variable de opcion y de directorio
 #DIRECTORIO ACTUAL DEFAULT
@@ -62,52 +65,72 @@ DIR="./"
 #en primer lugar, el path o H, G o V para havoc, Gencom o viralflow
 #en segundo lugar H, G o V para havoc, Gencom o viralflow
 
-if [ -z "$2" ] || [ $2="H" ] || [ $2="h" ]
-   then
-   OP="H"
+if [ ! -z "$2" ]
+then
 
-elif [ $2 = "v" ] || [ $2 = "V" ]  
-   then
-   OP="V"
+   if [ -d "$1" ]
+   then 
+      DIR=$1
 
-elif [ $2 = "g" ] || [ $2 = "G" ]  
-   then
-   OP="G"
-
-fi
+   else
+      echo "Path invalido. trabajando en folder actual"
+      DIR=$PWD
+   fi
 
 
-if [ -z "$1" ]
-   then
-   echo "Corriendo en folder actual con HAVoC"
-   OP="H"
+   if [ $2 = "H" ] || [ $2 = "h" ]
+      then
+      echo "asignado 1"
+      OP="H"
 
+   elif [ $2 = "v" ] || [ $2 = "V" ]  
+      then
+      OP="V"
 
-elif [ ! -d "$1" ]
-  then
-  echo "No se proporciono un path valido. Se utilizara el directorio actual"
-      if [ $1="H" ] || [ $2="1" ]
-         then
-         OP="H"
+   elif [ $2 = "g" ] || [ $2 = "G" ]  
+      then
+      OP="G"
 
-      elif [ $2 = "v" ] || [ $2 = "V" ]  
-         then
-         OP="V"
+   else
+   echo "Opcion no valida. Terminando"
+   exit
 
-      ######################################################elif Gencom
-
-
-      else
-         DIR="$PWD"
-
-      fi
+   fi
 
 else
-   DIR=$1
+   if [ ! -d "$1" ]
+   then
+   echo "No se proporciono un path. Se utilizara el directorio actual"
+         if [ $1="H" ] || [ $1="h" ]
+            then
+            OP="H"
+
+         elif [ $1 = "v" ] || [ $1 = "V" ]  
+            then
+            OP="V"
+
+         elif [ $1 = "g" ] || [ $1 = "G" ]  
+            then
+            OP="G"
+
+
+         else
+            echo "Opcion no valida. Terminando"
+            exit
+
+
+         fi
+      DIR=$PWD
+
+   else
+      DIR=$1
+      OP="H"
+   fi
 fi
 
 #control de calidad con fastqc y multiqc
 ############ RUN QCSECUENCE ################
+echo $OP
 cd $DIR
 QCsequence
 
@@ -172,20 +195,34 @@ if [ $OP = "V" ]
    #### IF VIRALFLOW
 
    #### COPY ADAPTERS AND REF FILES #####
-   #### cp Scripts/* ./
+   cp ~/Documents/COVLNS/Refs/* ./
 
 
    ####create .conf
+   cat > args.conf << EOF  
+run
+inputDir ./
+referenceGenome reference.fasta
+adaptersFile ART_adapters.fa
+totalCpus 2
+depth 5 
+minLen 75 
+containerImg viralflow_container:latest
+minDpIntrahost 100 
+trimLen 0 
+cpusPerSample 1
+
+EOF
 
 
    #### BUILD DOCKER
-   #### viralflow --build -containerService docker
+   viralflow --build -containerService docker
 
    #### RUN VIRALFOW IN DOCKER
-   #### viralflow --runContainer -containerService docker -inArgsFile ./test_files/test_args_docker.conf
+   viralflow --runContainer -containerService docker -inArgsFile args.conf
 
-   ####chmod 777 .results
-   ####bash grafcov.sh v
+   sudo chmod 777 *.results
+   bash grafcov.sh v
 
 
 #### OPCION HAVoC
@@ -215,7 +252,7 @@ elif [ $OP = "G" ]
    echo "Running Gencom"
    echo "-------------"
    echo ""
-   #bash gencom_beta.v2-4.sh $DIR
+   bash ~/Documents/COVLNS/GencomMod/gencom_beta.v2-4.sh $DIR
 
 
 
@@ -232,11 +269,14 @@ fi
 #### FILTRAR a partir de graficas de covertura
 
 #### Abrir PDF de graficas de covertura
-################################################################ if havoc or viralfow
-xdg-open $DIR/GraficasCovertura.pdf
+if [ $OP == "H" ]  || [ $OP == "V" ]
+   then
+   xdg-open $DIR/GraficasCovertura.pdf
 
-################################################################# elif gencom
-################################################################# open covertura         
+else
+xdg-open $DIR/analysis/coverage/individualdepth_plot.png
+
+fi
 
 echo ""
 echo "-------------------------------------------------------------------"
