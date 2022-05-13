@@ -36,14 +36,17 @@ text = open(inputcsv, "r")
 
 sns.set_theme(style="ticks")
 
-
-df = pd.read_csv(inputcsv, sep=' ')
+df = pd.read_csv(inputcsv, sep=' ', low_memory=False)
 
 df.columns =['Sample', 'pos', 'depth']
+print("leido")
 #print(df)
 # Initialize a grid of plots with an Axes for each walk
+times = df.pos.unique()
 grid = sns.FacetGrid(df, col="Sample", hue="Sample", palette="tab20c",
                     col_wrap=4, height=2)
+
+print("grid made")
 #print(grid)
 # Draw a horizontal line to show the starting point
 grid.refline(y=10, linestyle=":")
@@ -56,9 +59,13 @@ grid.map(plt.plot, "pos", "depth")
 
 grid.refline(y=1000, linestyle=":")
 
+print("reflines done")
+
 # Adjust the tick positions and labels
 grid.set(xticks=np.arange(0, 30000, step=10000), yticks=[0, 10, 100, 10000],
          xlim=(1, 30000), ylim=(3.5,50000), yscale="log")
+
+print("grid set")
 
 # Adjust the arrangement of the plots
 grid.fig.tight_layout(w_pad=1)

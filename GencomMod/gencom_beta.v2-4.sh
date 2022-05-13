@@ -90,6 +90,8 @@ start=$(date +%s.%N)
 	mkdir $output_dir/analysis/vcffiles/  
 	mkdir $output_dir/analysis/fastas/
 	mkdir $output_dir/analysis/nextclade/
+	mkdir $output_dir/analyzedfiles  
+	sudo chmod 777 $output_dir/analyzedfiles
   
   ####################################################################################################
   #TESTING PURPOSE
@@ -112,7 +114,7 @@ start=$(date +%s.%N)
 
 	echo "starting $d primers removal"
 	echo "################################################"
-	bwa mem -t 4 /home/laboratorionacional/Documents/COVLNS/GencomMod/data/SARS2.fas $read_1 $read_2 | python /home/laboratorionacional/Documents/COVLNS/GencomMod/Alt_nCov/trim_primer_parts.py /home/laboratorionacional/Documents/COVLNS/GencomMod/data/primerv3.bed $read_1 $read_2
+	bwa mem -t 6 /home/laboratorionacional/Documents/COVLNS/GencomMod/data/SARS2.fas $read_1 $read_2 | python /home/laboratorionacional/Documents/COVLNS/GencomMod/Alt_nCov/trim_primer_parts.py /home/laboratorionacional/Documents/COVLNS/GencomMod/data/primerv3.bed $read_1 $read_2
 	echo "starting $d quasitools quality control and mapping"
 	echo "################################################"
 	quasitools hydra -mf 0.15 -vq 70 -i $d  $read_1 $read_2 -o $output_dir/analysis/$d 
@@ -129,7 +131,7 @@ start=$(date +%s.%N)
 	/home/laboratorionacional/Documents/COVLNS/GencomMod/runingpango.sh $output_dir/analysis/$d/$d.fas $output_dir/analysis/$d/ 4
 	cp $output_dir/analysis/$d/*_mutation* $output_dir/analysis/aafiles/.
 	cp $output_dir/analysis/$d/$d.fas $output_dir/analysis/fastas/.    
-  cp $output_dir/analysis/$d/*_final_* $output_dir/analysis/vcffiles/.
+  	cp $output_dir/analysis/$d/*_final_* $output_dir/analysis/vcffiles/.
 	samtools depth -aa $output_dir/analysis/$d/align.bam | awk -v sample=$d '{$1=sample ; print;}' >  $output_dir/analysis/$d/$d.tsv
 	samtools coverage $output_dir/analysis/$d/align.bam >  $output_dir/analysis/$d/$d.coverage
 	samtools stats $output_dir/analysis/$d/align.bam | grep ^SN | cut -f 2- | grep 'average length:' >  $output_dir/analysis/$d/$d.readlength
@@ -141,7 +143,12 @@ start=$(date +%s.%N)
 	echo "################################################"
 	now="$(date +%c)"
 	echo -e "finished $d SARS-Cov-2019 Analysis at \t$now" >> "$output_dir/analysis/mensajes.log"
+	
+	mv $read_1 $output_dir/analyzedfiles/.
+	mv $read_2 $output_dir/analyzedfiles/.
+
 	done
+	
 	echo "drawing final plots of the run"
 	echo "################################################"
 	cat $output_dir/analysis/coverage/coverage_file_*.tsv >  $output_dir/analysis/coverage/depth_file.tsv
@@ -157,10 +164,8 @@ nextclade --in-order --input-fasta $output_dir/analysis/fastas/consensus.fasta -
 
 echo "################################################"
 	echo "moving fastq files and zipping them"
-echo "################################################"
-	mkdir $output_dir/analyzedfiles  
-	sudo chmod 777 $output_dir/analyzedfiles  
-	mv $output_dir/*fastq $output_dir/analyzedfiles/.
+echo "################################################"  
+
 	pigz $output_dir/analyzedfiles/*fastq
 end=$(date +%s.%N)    
 runtime=$(python -c "print((${end} - ${start})/60)")

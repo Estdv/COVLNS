@@ -11,7 +11,7 @@
 #      : bash COVLNS.sh [mode] (corre en directorio actual)
 
 # path: Directorio en donde se encuentran los archivos fastq
-# mode: [(H,h):HAVoC,(V,v):Viralflow] software de variantes utilizado (default: h)
+# mode: [(H,h):HAVoC,(V,v):Viralflow,(G,g):Gencom] software de variantes utilizado (default: h)
 
 # ex: bash COVLNS.sh /home/fastqs/ h
 
@@ -21,7 +21,7 @@
    # pcsv.sh
    # plot_cov.R
    # QCsequence
-
+   # GencomMod
    # Reference files (7)
    # ART_adapters.fa
 
@@ -129,8 +129,7 @@ else
 fi
 
 #control de calidad con fastqc y multiqc
-############ RUN QCSECUENCE ################
-echo $OP
+############ RUN QCSECUENCE ###############
 cd $DIR
 QCsequence
 
