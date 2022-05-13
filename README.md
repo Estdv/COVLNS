@@ -33,19 +33,6 @@ Corre en directorio actual
 
 ## Requerimientos:
 
-   # Viralflow y todos sus requerimientos
-      # Consultar https://github.com/dezordi/ViralFlow para requerimientos
-   # HAVoC y todos los requerimientos
-      # Consultar https://bitbucket.org/auto_cov_pipeline/havoc/src/master/ para requerimientos
-   # Gencom y todas sus dependencias
-      # Consultar 
-   # Docker
-   # Samtools
-   # pdfunite
-   # fastqc
-   # multiqc
-   # R
-
    | Plugin | README |
 | ------ | ------ |
 | ViralFlow | [https://github.com/dezordi/ViralFlow][PlDb] |
