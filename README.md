@@ -1,10 +1,9 @@
 # COVLNS
 
 
-## Programa Principal para analisis de variantes de SASR-COV-2 a partir de datos de secuenciacion
-## generados en el Laboratorio Nacional de Salud
+## Programa Principal para analisis de variantes de SASR-COV-2 a partir de datos de secuenciacion generados en el Laboratorio Nacional de Salud
 
-## Autor: Esteban Del Valle
+### Autor: Esteban Del Valle
 
 ### USAGE: 
 ```sh
@@ -19,9 +18,9 @@ Corre en directorio actual
 - path: Directorio en donde se encuentran los archivos fastq
 - mode: [(H,h):HAVoC,(V,v):Viralflow,(G,g):Gencom] software de variantes utilizado (default: h)
 
-#### ex: bash COVLNS.sh /home/fastqs/ h
+##### ex: bash COVLNS.sh /home/fastqs/ h
 
-## File list
+### File list
 
    - grafcov.sh
    - pcsv.sh
@@ -31,7 +30,7 @@ Corre en directorio actual
    - Reference files (7)
    - ART_adapters.fa
 
-## Requerimientos:
+### Requerimientos:
 
    | Plugin | README |
 | ------ | ------ |
