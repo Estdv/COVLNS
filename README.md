@@ -21,9 +21,9 @@ Corre en directorio actual
 ##### ex: bash COVLNS.sh /home/fastqs/ h
 
 ## Modos:
--Viralflow (v): Corre en docker y usa el ambiente de pangolin
--Havoc (h): Utiliza ambientes de pangolin y havoc
--Gencom (g): Corre en ambiente principal
+- Viralflow (v): Corre en docker y usa el ambiente de pangolin
+- Havoc (h): Utiliza ambientes de pangolin y havoc
+- Gencom (g): Corre en ambiente principal
 
 
 ## File list
