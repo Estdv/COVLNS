@@ -20,6 +20,12 @@ Corre en directorio actual
 
 ##### ex: bash COVLNS.sh /home/fastqs/ h
 
+## Modos:
+-Viralflow (v): Corre en docker y usa el ambiente de pangolin
+-Havoc (h): Utiliza ambientes de pangolin y havoc
+-Gencom (g): Corre en ambiente principal
+
+
 ## File list
 
    - grafcov.sh
@@ -43,3 +49,6 @@ Corre en directorio actual
 | fastqc | https://www.bioinformatics.babraham.ac.uk/projects/fastqc/] |
 | multiqc | https://multiqc.info/ |
 | R | https://www.r-project.org/ |
+
+## Nota:
+Pangolin puede presentar problema. Se recomienda mantenerlo actulizado en los diferentes ambientes usando pangolin --update
