@@ -9,11 +9,11 @@
 ```sh
 bash COVLNS.sh [path] [mode]
 ```
-
+Correr en directorio actual
 ```sh
 bash COVLNS.sh[mode]
 ```
-Corre en directorio actual
+
 
 - path: Directorio en donde se encuentran los archivos fastq
 - mode: [(H,h):HAVoC,(V,v):Viralflow,(G,g):Gencom] software de variantes utilizado (default: h)
