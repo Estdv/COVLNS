@@ -80,7 +80,6 @@ then
 
    if [ $2 = "H" ] || [ $2 = "h" ]
       then
-      echo "asignado 1"
       OP="H"
 
    elif [ $2 = "v" ] || [ $2 = "V" ]  
@@ -98,8 +97,7 @@ then
    fi
 
 else
-   if [ ! -d "$1" ]
-   then
+   
    echo "No se proporciono un path. Se utilizara el directorio actual"
          if [ $1="H" ] || [ $1="h" ]
             then
@@ -122,10 +120,7 @@ else
          fi
       DIR=$PWD
 
-   else
-      DIR=$1
-      OP="H"
-   fi
+   
 fi
 
 #control de calidad con fastqc y multiqc
@@ -231,6 +226,7 @@ elif [ $OP = "H" ]
    echo "Running HAVoC"
    echo "-------------"
    echo ""
+
 
    # Llamar al ejecutable de havoc con el directorio provisto
    bash /home/laboratorionacional/auto_cov_pipeline-havoc-e1b9b2be490a/HAVoC.sh $DIR
