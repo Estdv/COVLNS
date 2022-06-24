@@ -14,7 +14,7 @@ elif [ $1=h ]
     then
     for FILE in */;
     do cd $FILE
-    cp *.csv ../pangolin_results;
+    cp *.csv ../pangolin_results/${FILE::-1}.pango.csv;
     cd ..
     done
 
