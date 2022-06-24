@@ -128,7 +128,7 @@ start=$(date +%s.%N)
 
 	/home/laboratorionacional/Documents/COVLNS/GencomMod/generatevariantfilesars2.sh $output_dir $d
 
-	/home/laboratorionacional/Documents/COVLNS/GencomMod/runingpango.sh $output_dir/analysis/$d/$d.fas $output_dir/analysis/$d/ 4
+	/home/laboratorionacional/Documents/COVLNS/GencomMod/runingpango.sh $output_dir/analysis/$d/$d.fas $output_dir/analysis/$d/ 6
 	cp $output_dir/analysis/$d/*_mutation* $output_dir/analysis/aafiles/.
 	cp $output_dir/analysis/$d/$d.fas $output_dir/analysis/fastas/.    
   	cp $output_dir/analysis/$d/*_final_* $output_dir/analysis/vcffiles/.

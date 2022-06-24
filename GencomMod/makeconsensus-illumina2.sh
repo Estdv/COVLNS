@@ -41,7 +41,7 @@ REF_FILE=/home/laboratorionacional/Documents/COVLNS/GencomMod/data/SARS2.fas
     echo "############################################"
     echo -e "$REF_NAME\t$LENGTH" > $c/my.genome
     bedtools bamtobed -i $BAM_FILE > $c/reads.bed
-    bedtools genomecov -bga -i $c/reads.bed -g $c/my.genome | awk  '$3 < 2' > $c/zero.bed
+    bedtools genomecov -bga -i $c/reads.bed -g $c/my.genome | awk  '$4 < 1' > $c/zero.bed
     maskFastaFromBed -fi $REF_FILE -bed $c/zero.bed -fo $c/masked.fasta
     bcftools mpileup -Ou -C50 -f $c/masked.fasta $BAM_FILE | bcftools call --ploidy 1 -mv -Oz -o $c/test.vcf.gz
     bcftools index $c/test.vcf.gz
